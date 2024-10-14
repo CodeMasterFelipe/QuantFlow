@@ -2,46 +2,45 @@
 
 QuantFlow is a flexible and robust Python framework for developing, backtesting, and executing quantitative trading strategies. Designed with modularity and scalability in mind, QuantFlow allows you to seamlessly transition between backtesting and live trading environments with minimal code changes. It leverages an event-driven architecture to facilitate clear data flow and decoupled components, making it easier to build, test, and deploy trading algorithms.
 
+## Disclaimer
+
+**QuantFlow is Under Active Development**
+
+QuantFlow is currently in the early stages of development and is not yet feature-complete. The framework is subject to significant changes, and some components may not be fully implemented. Use it at your own risk.
+
 ### Table of Contents
 
-    • [Features](#features)
-    • Installation
-    • Quick Start
-        • Basic Setup
-        • Writing a Strategy
-        • Running a Backtest
-    • Architecture Overview
-        • Components
-            • Data Feed
-            • Strategy
-            • Risk Manager
-            • Portfolio
-            • Order Management System (OMS)
-            • Execution Handler
-            • Event Queue
-            • Trading Engine
-    • Extending QuantFlow
-    • Contributing
-    • License
-    • Contact
+• [Features](#features)
+• [Installation](#installation)
+• [Quick Start](#quick-start)
+    • [Basic Setup](#basic-setup)
+    • [Writing a Strategy](#writing-a-strategy)
+    • [Running a Backtest](#running-a-backtest)
+• [Architecture Overview](#architecture-overview)
+    • Components
+        • Data Feed
+        • Strategy
+        • Risk Manager
+        • Portfolio
+        • Order Management System (OMS)
+        • Execution Handler
+        • Event Queue
+        • Trading Engine
+• [Extending QuantFlow](#extending-quantflow)
 
 ## Features
 
-    • Event-Driven Architecture: Facilitates a clear and modular design, enabling components to interact through events.
-    • Modularity and Encapsulation: Components are decoupled, making it easy to maintain and extend the framework.
-    • Seamless Transition Between Backtesting and Live Trading: Swap out data feeds and execution handlers to switch environments without changing your strategy code.
-    • Risk Management: Includes support for stop-loss, take-profit, and dynamic position sizing.
-    • User-Friendly Interface: Write your own strategies by subclassing and implementing a few methods.
-    • Portfolio Management: Tracks positions, cash balance, and calculates portfolio metrics.
-    • Extensible Components: Customize or replace any component to suit your specific needs.
+• Event-Driven Architecture: Facilitates a clear and modular design, enabling components to interact through events.
+• Modularity and Encapsulation: Components are decoupled, making it easy to maintain and extend the framework.
+• Seamless Transition Between Backtesting and Live Trading: Swap out data feeds and execution handlers to switch environments without changing your strategy code.
+• Risk Management: Includes support for stop-loss, take-profit, and dynamic position sizing.
+• User-Friendly Interface: Write your own strategies by subclassing and implementing a few methods.
+• Portfolio Management: Tracks positions, cash balance, and calculates portfolio metrics.
+• Extensible Components: Customize or replace any component to suit your specific needs.
 
 ## Installation
 
-QuantFlow requires Python 3.7 or higher. You can install QuantFlow via pip:
-
-pip install quantflow
-
-Note: As QuantFlow is currently under development, you might need to clone the repository and install it manually.
+As of now, QuantFlow is not available on PyPI. You can install it directly from the GitHub repository.
 
 ## Quick Start
 
