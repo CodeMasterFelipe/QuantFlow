@@ -10,33 +10,33 @@ QuantFlow is currently in the early stages of development and is not yet feature
 
 ### Table of Contents
 
-• [Features](#features)
-• [Installation](#installation)
-• [Quick Start](#quick-start)
-    • [Basic Setup](#basic-setup)
-    • [Writing a Strategy](#writing-a-strategy)
-    • [Running a Backtest](#running-a-backtest)
-• [Architecture Overview](#architecture-overview)
-    • Components
-        • Data Feed
-        • Strategy
-        • Risk Manager
-        • Portfolio
-        • Order Management System (OMS)
-        • Execution Handler
-        • Event Queue
-        • Trading Engine
-• [Extending QuantFlow](#extending-quantflow)
+- [Features](#features)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+  - [Basic Setup](#basic-setup)
+  - [Writing a Strategy](#writing-a-strategy)
+  - [Running a Backtest](#running-a-backtest)
+- [Architecture Overview](#architecture-overview)
+  - Components
+    - Data Feed
+    - Strategy
+    - Risk Manager
+    - Portfolio
+    - Order Management System (OMS)
+    - Execution Handler
+    - Event Queue
+    - Trading Engine
+- [Extending QuantFlow](#extending-quantflow)
 
 ## Features
 
-• Event-Driven Architecture: Facilitates a clear and modular design, enabling components to interact through events.
-• Modularity and Encapsulation: Components are decoupled, making it easy to maintain and extend the framework.
-• Seamless Transition Between Backtesting and Live Trading: Swap out data feeds and execution handlers to switch environments without changing your strategy code.
-• Risk Management: Includes support for stop-loss, take-profit, and dynamic position sizing.
-• User-Friendly Interface: Write your own strategies by subclassing and implementing a few methods.
-• Portfolio Management: Tracks positions, cash balance, and calculates portfolio metrics.
-• Extensible Components: Customize or replace any component to suit your specific needs.
+- Event-Driven Architecture: Facilitates a clear and modular design, enabling components to interact through events.
+- Modularity and Encapsulation: Components are decoupled, making it easy to maintain and extend the framework.
+- Seamless Transition Between Backtesting and Live Trading: Swap out data feeds and execution handlers to switch environments without changing your strategy code.
+- Risk Management: Includes support for stop-loss, take-profit, and dynamic position sizing.
+- User-Friendly Interface: Write your own strategies by subclassing and implementing a few methods.
+- Portfolio Management: Tracks positions, cash balance, and calculates portfolio metrics.
+- Extensible Components: Customize or replace any component to suit your specific needs.
 
 ## Installation
 
