@@ -57,7 +57,7 @@ class TradingEngine:
         self.strategy = strategy
         self.risk_manager = risk_manager or SimpleRiskManager(self.portfolio)
         self.execution_handler = execution_handler or BacktestExecutionHandler(
-            self.event_queue, historical_data
+            self.event_queue
         )
         self.oms = OrderManagementSystem(self.event_queue, self.execution_handler)
         self.event_handler = EventHandler(

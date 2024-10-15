@@ -1,10 +1,11 @@
 from quantflow.core.execution_handler import ExecutionHandler
 from quantflow.core.events import FillEvent
 from quantflow.core.types import Fill
+from quantflow.core.shared_context import SharedContext
 
 
 class BacktestExecutionHandler(ExecutionHandler):
-    def __init__(self, event_queue, market_data):
+    def __init__(self, event_queue):
         """
         Initializes the backtest execution handler with the event queue and market data
 
@@ -13,7 +14,7 @@ class BacktestExecutionHandler(ExecutionHandler):
             market_data (pd.DataFrame): The data feed to retrieve market prices from
         """
         self.event_queue = event_queue
-        self.market_data = market_data
+        self.shared_context = SharedContext()
 
     def execute_order(self, order):
         """
@@ -23,7 +24,7 @@ class BacktestExecutionHandler(ExecutionHandler):
         Args:
             order (Order): The order to execute
         """
-        current_price = self.market_data.loc[order.symbol, "close"]
+        current_price = self.shared_context.get_latest_price()
         fill = Fill(
             order_id=order.order_id,
             symbol=order.symbol,
