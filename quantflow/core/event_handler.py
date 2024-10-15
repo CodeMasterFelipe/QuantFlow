@@ -1,4 +1,5 @@
 from quantflow.core.events import SignalEvent, OrderRequestEvent
+from quantflow.core.shared_context import SharedContext
 
 
 class EventHandler:
@@ -8,6 +9,7 @@ class EventHandler:
         self.portfolio = portfolio
         self.oms = oms
         self.event_queue = event_queue
+        self.shared_context = SharedContext()
 
     def handle_event(self, event):
         new_event = event.process(self)
@@ -16,6 +18,7 @@ class EventHandler:
 
     def process_market_event(self, event) -> SignalEvent | None:
         signal = self.strategy.on_new_data(event.data)
+        self.shared_context.update_latest_price(event.data.Close)
         if signal:
             return SignalEvent(signal)
 
