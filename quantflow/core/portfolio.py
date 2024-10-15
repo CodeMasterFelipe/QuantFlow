@@ -1,12 +1,13 @@
 from quantflow.core.events import FillEvent
 from quantflow.core.types import SignalType
+from quantflow.core.shared_context import SharedContext
 
 
 class Portfolio:
     def __init__(self):
         self.positions = {}
         self.cash = 0.0
-        self.event_queue = None
+        self.shared_context = SharedContext()
 
     def update_portfolio(self, fill: FillEvent):
         symbol = fill.data.symbol
@@ -24,7 +25,11 @@ class Portfolio:
         return self.positions.get(symbol, [])
 
     def get_equity(self):
-        return self.cash
+        latest_price = self.shared_context.get_latest_price()
+        total_equity = self.cash
+        for symbol, position in self.positions.items():
+            total_equity += position * latest_price[symbol]
+        return total_equity
 
     def __str__(self):
         return f"Portfolio(cash={self.cash}, positions={self.positions})"
