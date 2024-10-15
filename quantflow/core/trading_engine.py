@@ -14,6 +14,25 @@ from quantflow.core.events import MarketEvent
 
 
 class TradingEngine:
+    """
+    The TradingEngine class is responsible for coordinnating all the components of the trading system.
+    It can be use for both backtesting and live trading.
+
+    Attributes:
+        event_queue (EventQueue): The queue that stores all the events.
+        data_feed (DataFeed): The data feed that provides the data, either backtest data or live data.
+        portfolio (Portfolio): The portfolio that stores the account information.
+        strategy (Strategy): The strategy that generates signals.
+        risk_manager (RiskManager): The risk manager that manages the risk.
+        execution_handler (ExecutionHandler): Execute order in the market, backtest or live.
+        oms (OrderManagementSystem): Manages the lifecycle of the orders.
+        event_handler (EventHandler): Process the events and coordinates interaction between the components.
+
+    Usage:
+        engine = TradingEngine(MovingAverageStrategy(), historical_data="data.csv")
+        engine.run()
+    """
+
     def __init__(
         self,
         strategy: Strategy,
@@ -22,6 +41,16 @@ class TradingEngine:
         risk_manager: RiskManager | None = None,
         historical_data: str | None = None,
     ):
+        """
+        Initialize the TradingEngine with the specified strategy and components.
+
+        Args:
+            strategy (Strategy): The strategy that generates signals.
+            data_feed (DataFeed): The data feed that provides the data, either backtest data or live data.
+            execution_handler (ExecutionHandler): Execute order in the market, backtest or live.
+            risk_manager (RiskManager): The risk manager that manages the risk.
+            historical_data (str): The path to the historical data file.
+        """
         self.event_queue = EventQueue()
         self.data_feed = data_feed or BacktestDataFeed(historical_data)
         self.portfolio = Portfolio()
@@ -36,6 +65,9 @@ class TradingEngine:
         )
 
     def run(self):
+        """
+        Start the trading engine, process data and event in a loop until data feed is exhausted.
+        """
         data_generator = iter(self.data_feed)
         for data in data_generator:
             market_event = MarketEvent(data)
