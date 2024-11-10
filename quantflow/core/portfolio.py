@@ -22,7 +22,7 @@ class Portfolio:
             self.positions[symbol] -= fill.fill_quantity
 
     def get_position(self, symbol):
-        return self.positions.get(symbol, [])
+        return self.positions.get(symbol, 0)
 
     def get_equity(self):
         latest_price = self.shared_context.get_latest_price()
