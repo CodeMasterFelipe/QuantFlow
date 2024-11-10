@@ -12,6 +12,7 @@ class OrderSide(Enum):
     BUY = "BUY"
     SELL = "SELL"
 
+
 @dataclass
 class Signal:
     symbol: str
@@ -32,6 +33,7 @@ class OrderType(Enum):
 class OrderRequest:
     symbol: str
     quantity: int
+    price: float
     order_type: OrderType
     stop_loss: float | None = None
     take_profit: float | None = None
@@ -47,11 +49,13 @@ class OrderStatus(Enum):
 class Order:
     order_id: str
     symbol: str
+    price: float
     order_type: OrderType
     quantity: int
     stop_loss: float | None = None
     take_profit: float | None = None
     status: OrderStatus = OrderStatus.NEW
+    side: OrderSide = OrderSide.BUY
 
 
 @dataclass
@@ -60,5 +64,5 @@ class Fill:
     symbol: str
     fill_price: float
     fill_quantity: int
-    order_side: SignalType
+    order_side: OrderSide
     order_type: OrderType = OrderType.MARKET
