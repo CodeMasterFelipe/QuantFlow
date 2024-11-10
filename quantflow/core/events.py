@@ -15,7 +15,7 @@ class Event(ABC):
 
 class MarketEvent(Event):
     def process(self, handler):
-        return handler.on_market_data(self)
+        return handler.process_market_event(self)
 
 
 class SignalEvent(Event):
