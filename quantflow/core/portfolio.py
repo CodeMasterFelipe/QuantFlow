@@ -9,17 +9,17 @@ class Portfolio:
         self.cash = 0.0
         self.shared_context = SharedContext()
 
-    def update_portfolio(self, fill: FillEvent):
-        symbol = fill.data.symbol
+    def update_portfolio(self, fill: Fill):
+        symbol = fill.symbol
         if symbol not in self.positions:
             self.positions[symbol] = 0
 
-        if fill.data.order_side == SignalType.BUY:
-            self.cash -= fill.data.fill_price * fill.data.fill_quantity
-            self.positions[symbol] += fill.data.fill_quantity
-        elif fill.data.order_side == SignalType.SELL:
-            self.cash += fill.data.fill_price * fill.data.fill_quantity
-            self.positions[symbol] -= fill.data.fill_quantity
+        if fill.order_side == OrderSide.BUY:
+            self.cash -= fill.fill_price * fill.fill_quantity
+            self.positions[symbol] += fill.fill_quantity
+        elif fill.order_side == OrderSide.SELL:
+            self.cash += fill.fill_price * fill.fill_quantity
+            self.positions[symbol] -= fill.fill_quantity
 
     def get_position(self, symbol):
         return self.positions.get(symbol, [])
