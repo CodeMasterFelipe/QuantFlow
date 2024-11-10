@@ -1,15 +1,13 @@
 from quantflow.backtesting import BacktestDataFeed, BacktestExecutionHandler
-from quantflow.core import (
-    Strategy,
-    EventQueue,
-    EventHandler,
-    DataFeed,
-    ExecutionHandler,
-    RiskManager,
-    SimpleRiskManager,
-    Portfolio,
-    OrderManagementSystem,
-)
+
+from .data_feed import DataFeed
+from .event_queue import EventQueue
+from .event_handler import EventHandler
+from .execution_handler import ExecutionHandler
+from .order_management_system import OrderManagementSystem
+from .portfolio import Portfolio
+from .risk_manager import RiskManager, SimpleRiskManager
+
 from quantflow.core.events import MarketEvent
 
 
@@ -35,7 +33,7 @@ class TradingEngine:
 
     def __init__(
         self,
-        strategy: Strategy,
+        strategy,
         data_feed: DataFeed | None = None,
         execution_handler: ExecutionHandler | None = None,
         risk_manager: RiskManager | None = None,
