@@ -35,3 +35,6 @@ class OrderManagementSystem:
 
     def generate_order_id(self):
         return str(uuid.uuid4())
+    
+    def check_stoploss_takeprofit(self):
+        self.execution_handler.check_stoploss_takeprofit()
