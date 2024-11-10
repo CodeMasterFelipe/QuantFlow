@@ -1,5 +1,6 @@
-from quantflow.core.events import SignalEvent, OrderRequestEvent
+from quantflow.core.events import SignalEvent, OrderRequestEvent, FillEvent
 from quantflow.core.shared_context import SharedContext
+import logging
 
 
 class EventHandler:
@@ -18,12 +19,14 @@ class EventHandler:
 
     def process_market_event(self, event) -> SignalEvent | None:
         signal = self.strategy.on_new_data(event.data)
-        self.shared_context.update_latest_price(event.data.Close)
+        self.shared_context.update_latest_price(event.data)
+        self.check_stoploss_takeprofit()
         if signal:
             return SignalEvent(signal)
 
     def process_signal_event(self, event) -> OrderRequestEvent | None:
         order_request = self.risk_manager.generate_order_request(event.data)
+        logging.info(f"Order request: {order_request}")
         if order_request:
             return OrderRequestEvent(order_request)
 
@@ -34,6 +37,7 @@ class EventHandler:
             return FillEvent(fill)
 
     def process_fill_event(self, event) -> None:
+        logging.info(f"Updating portfolio with: {event.data}")
         self.portfolio.update_portfolio(event.data)
 
     def check_stoploss_takeprofit(self):
