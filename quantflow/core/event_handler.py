@@ -35,3 +35,8 @@ class EventHandler:
 
     def process_fill_event(self, event) -> None:
         self.portfolio.update_portfolio(event.data)
+
+    def check_stoploss_takeprofit(self):
+        """check if stoploss or takeprofit is hit if so, send back a fill signal which should update the portfolio later.
+        """
+        self.oms.check_stoploss_takeprofit()
