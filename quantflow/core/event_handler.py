@@ -27,8 +27,11 @@ class EventHandler:
         if order_request:
             return OrderRequestEvent(order_request)
 
-    def process_order_request_event(self, event) -> None:
-        self.oms.handle_order_request(event.data)
+    def process_order_request_event(self, event) -> FillEvent | None:
+        fill = self.oms.handle_order_request(event.data)
+        logging.info(f"Fill: {fill}")
+        if fill:
+            return FillEvent(fill)
 
     def process_fill_event(self, event) -> None:
         self.portfolio.update_portfolio(event.data)
