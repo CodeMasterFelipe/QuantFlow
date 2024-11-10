@@ -27,8 +27,8 @@ class Portfolio:
     def get_equity(self):
         latest_price = self.shared_context.get_latest_price()
         total_equity = self.cash
-        for symbol, position in self.positions.items():
-            total_equity += position * latest_price[symbol]
+        for _, position in self.positions.items():
+            total_equity += position * latest_price
         return total_equity
 
     def __str__(self):
