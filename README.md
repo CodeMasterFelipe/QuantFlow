@@ -13,7 +13,6 @@ QuantFlow is currently in the early stages of development and is not yet feature
 - [Features](#features)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
-  - [Basic Setup](#basic-setup)
   - [Writing a Strategy](#writing-a-strategy)
   - [Running a Backtest](#running-a-backtest)
 - [Architecture Overview](#architecture-overview)
@@ -40,31 +39,21 @@ QuantFlow is currently in the early stages of development and is not yet feature
 
 ## Installation
 
-As of now, QuantFlow is not available on PyPI. You can install it directly from the GitHub repository.
+As for now QuantFlow can be only installed from the source code.
+
+```bash
+git clone https://github.com/CodeMasterFelipe/QuantFlow.git
+cd QuantFlow
+pip install .
+```
+
+Alternatively you can installed in edit mode if you want to edit the code
+
+```bash
+pip install -e .
+```
 
 ## Quick Start
-
-### Basic Setup
-
-Before diving into writing strategies, let’s set up a basic environment:
-
-```python
-from quantflow.core import (
-EventQueue,
-TradingEngine,
-BacktestDataFeed,
-BacktestExecutionHandler,
-EventHandler,
-Portfolio,
-Strategy,
-RiskManager,
-OrderManagementSystem,
-)
-
-# Load your historical data
-
-historical_data = load_data('historical_prices.csv')
-```
 
 ### Writing a Strategy
 
@@ -103,31 +92,25 @@ class MovingAverageStrategy(Strategy):
         return None
 ```
 
+> NOTE: short selling hasn't been tested yet.
+
 ### Running a Backtest
 
-Set up the necessary components and run the trading engine:
+To run the Strategy we first need a data feed, we are going to use the build in backtesting data feed, but you can create your own data feed by subclassing the DataFeed class.
+Then we need our Strategy that we created above. And finally we can pass all of this to the TradingEngine, which will take care of the rest.
 
 ```python
-# Initialize components
+from quantflow.backtesting import BacktestDataFeed
+from quantflow.core.trading_engine import TradingEngine
 
-event_queue = EventQueue()
-data_feed = BacktestDataFeed(historical_data)
-portfolio = Portfolio()
-strategy = MovingAverageStrategy()
-risk_manager = RiskManager(portfolio)
-execution_handler = BacktestExecutionHandler(event_queue)
-oms = OrderManagementSystem(event_queue, execution_handler)
-event_handler = EventHandler(strategy, risk_manager, portfolio, oms, event_queue)
-
-# Run the trading engine
-
-engine = TradingEngine(data_feed, event_handler, event_queue)
+data_feed = BacktestDataFeed('historical_prices.csv', datetime_col='Timestamp')
+strategy = SMACrossoverStrategy(short_window=50, long_window=200)
+engine = TradingEngine(strategy, data_feed=data_feed)
+engine.portfolio.cash = 10_000
 engine.run()
 
-# Output portfolio performance
-
-print(f"Final Portfolio Equity: {portfolio.get_equity()}")
-print(f"Positions: {portfolio.positions}")
+print(f"Final portfolio equity: {engine.portfolio.get_equity()}")
+print(f"Positions: {engine.portfolio.positions}")
 ```
 
 ### Architecture Overview
