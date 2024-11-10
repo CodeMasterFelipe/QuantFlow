@@ -11,8 +11,8 @@ class OrderManagementSystem:
 
     def handle_order_request(self, order_request):
         order = self.create_order(order_request)
-        self.order_book[order_request.order_id] = order
-        self.execution_handler.execute_order(order)
+        self.order_book[order.order_id] = order
+        return self.execution_handler.execute_order(order)
 
     def recieve_fill(self, fill):
         order = self.order_book.get(fill.order_id)
@@ -25,6 +25,7 @@ class OrderManagementSystem:
         return Order(
             order_id=order_id,
             symbol=order_request.symbol,
+            price=order_request.price,
             order_type=order_request.order_type,
             quantity=order_request.quantity,
             stop_loss=order_request.stop_loss,
