@@ -8,6 +8,10 @@ class SignalType(Enum):
     HOLD = "HOLD"
 
 
+class OrderSide(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
 @dataclass
 class Signal:
     symbol: str
