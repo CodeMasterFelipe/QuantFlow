@@ -8,25 +8,30 @@ class BacktestDataFeed(DataFeed):
         self.historical_data = pd.read_csv(historical_data)
         if datetime_col:
             self.historical_data[datetime_col] = pd.to_datetime(
-                self.historical_data[datetime_col]
+                self.historical_data[datetime_col], unit="s"
             )
             self.historical_data.set_index(datetime_col, inplace=True)
+
+        if "Symbol" not in self.historical_data.columns:
+            self.historical_data["Symbol"] = "BTCUSD"
 
     def resample(self, period: str):
         self.historical_data = (
             self.historical_data.resample(period)
             .agg(
                 {
-                    "open": "first",
-                    "high": "max",
-                    "low": "min",
-                    "close": "last",
-                    "volume": "sum",
+                    "Open": "first",
+                    "High": "max",
+                    "Low": "min",
+                    "Close": "last",
+                    "Volume": "sum",
+                    "Symbol": "first",
                 }
             )
             .dropna()
         )
+        self.historical_data.interpolate(method="linear", inplace=True)
 
     def __iter__(self) -> Generator:
         for _, row in self.historical_data.iterrows():
-            yield row.to_dict()
+            yield row
